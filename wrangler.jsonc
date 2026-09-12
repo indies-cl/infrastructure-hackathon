@@ -1,0 +1,20 @@
+{
+  "name": "infrastructure-hackathon",
+  "account_id": "42b4924619f529a17513a35253e67c52",
+  "compatibility_date": "2026-09-12",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+  },
+  "routes": [
+    {
+      "pattern": "infra.indies.cl",
+      "custom_domain": true,
+    },
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": { "enabled": true, "head_sampling_rate": 1 },
+    "traces": { "enabled": true, "head_sampling_rate": 0.01 },
+  },
+}

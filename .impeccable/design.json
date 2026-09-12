@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "overview": "Map-sheet sponsor page. Date first, cordillera as the plate, one grotesque, no cards. / is the frozen v1 compare route.",
+  "extensions": {
+    "motion": {
+      "ease": "cubic-bezier(0.23, 1, 0.32, 1)",
+      "button": "160ms color, 120ms press scale 0.97",
+      "reducedMotion": "drop movement, keep color"
+    },
+    "breakpoints": {
+      "stack": "719px",
+      "split": "720px"
+    }
+  }
+}

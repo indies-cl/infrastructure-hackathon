@@ -1,0 +1,73 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource/ia-writer-quattro/400.css';
+@import '@fontsource/ia-writer-quattro/700.css';
+@import 'tailwindcss';
+
+/* Geist Pixel Circle — OFL-1.1, The Geist Project Authors */
+@font-face {
+  font-family: 'Geist Pixel Circle';
+  src: url('./fonts/GeistPixel-Circle.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-background: #181818;
+  --color-foreground: #d6d4d0;
+  --color-primary: #6d4aff;
+  --color-primary-foreground: #181818;
+  --color-muted-foreground: #9a9890;
+  --color-border: #2a2a2a;
+  --color-ring: #6d4aff;
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'iA Writer Quattro', ui-monospace, monospace;
+  --font-pixel: 'Geist Pixel Circle', ui-monospace, monospace;
+}
+
+@utility font-pixel {
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: #181818;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background: #181818;
+    color: #d6d4d0;
+    font-family: var(--font-mono);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100svh;
+  }
+
+  ::selection {
+    background: #d6d4d0;
+    color: #181818;
+  }
+
+  html {
+    scrollbar-color: #3a3a3a #181818;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
