@@ -16,6 +16,7 @@ uniform vec2 uResolution;
 uniform vec2 uVideoSize;
 uniform float uChars;
 uniform float uCell;
+uniform float uInvert;
 
 vec2 coverUV(vec2 uv) {
   float canvasAR = uResolution.x / max(uResolution.y, 1.0);
@@ -30,9 +31,10 @@ void main() {
   vec2 px = vec2(gl_FragCoord.x, uResolution.y - gl_FragCoord.y);
   vec2 cell = floor(px / uCell);
   vec2 sampleUV = coverUV((cell + 0.5) * uCell / uResolution);
-  vec3 vid = texture2D(uVideo, sampleUV).rgb;
+  vec3 raw = texture2D(uVideo, sampleUV).rgb;
+  vec3 vid = mix(raw, 1.0 - raw, uInvert);
   float luma = dot(vid, vec3(0.299, 0.587, 0.114));
-  float sky = smoothstep(0.04, 0.22, vid.b - max(vid.r, vid.g)) * luma;
+  float sky = (1.0 - uInvert) * smoothstep(0.04, 0.22, vid.b - max(vid.r, vid.g)) * luma;
   float subject = clamp((luma - sky * 0.88 - 0.08) / 0.72, 0.0, 1.0);
   subject = pow(subject, 0.85);
   float idx = floor(subject * (uChars - 0.001));
@@ -91,7 +93,25 @@ function makeAtlas(gl: WebGLRenderingContext) {
   return texture
 }
 
-export function createAsciiVideo(canvas: HTMLCanvasElement, video: HTMLVideoElement) {
+export type AsciiSource = HTMLVideoElement | HTMLImageElement
+
+function sourceReady(source: AsciiSource) {
+  if (source instanceof HTMLVideoElement) return source.readyState >= 2
+  return source.complete && source.naturalWidth > 0
+}
+
+function sourceSize(source: AsciiSource) {
+  if (source instanceof HTMLVideoElement) {
+    return [source.videoWidth || 1280, source.videoHeight || 720] as const
+  }
+  return [source.naturalWidth || 1280, source.naturalHeight || 720] as const
+}
+
+export function createAsciiVideo(
+  canvas: HTMLCanvasElement,
+  source: AsciiSource,
+  invert = false,
+) {
   const glRaw = canvas.getContext('webgl', {
     alpha: true,
     premultipliedAlpha: true,
@@ -150,11 +170,13 @@ export function createAsciiVideo(canvas: HTMLCanvasElement, video: HTMLVideoElem
   const uVideoSize = gl.getUniformLocation(program, 'uVideoSize')
   const uChars = gl.getUniformLocation(program, 'uChars')
   const uCell = gl.getUniformLocation(program, 'uCell')
+  const uInvert = gl.getUniformLocation(program, 'uInvert')
 
   gl.uniform1i(uVideo, 0)
   gl.uniform1i(uAtlas, 1)
   gl.uniform1f(uChars, CHARS.length)
   gl.uniform1f(uCell, CELL)
+  gl.uniform1f(uInvert, invert ? 1 : 0)
   gl.enable(gl.BLEND)
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
 
@@ -170,16 +192,13 @@ export function createAsciiVideo(canvas: HTMLCanvasElement, video: HTMLVideoElem
   }
 
   function draw() {
-    if (video.readyState >= 2) {
+    if (sourceReady(source)) {
       gl.activeTexture(gl.TEXTURE0)
       gl.bindTexture(gl.TEXTURE_2D, videoTex)
       gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0)
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video)
-      gl.uniform2f(
-        uVideoSize,
-        video.videoWidth || 1280,
-        video.videoHeight || 720,
-      )
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source)
+      const [width, height] = sourceSize(source)
+      gl.uniform2f(uVideoSize, width, height)
     }
     gl.activeTexture(gl.TEXTURE1)
     gl.bindTexture(gl.TEXTURE_2D, atlas)

@@ -71,3 +71,35 @@
     }
   }
 }
+
+@layer components {
+  mark[data-hl] {
+    --hl-ms: 700ms;
+    color: var(--color-foreground);
+    background-color: transparent;
+    background-image: linear-gradient(
+      color-mix(in srgb, var(--color-primary) 78%, #181818),
+      color-mix(in srgb, var(--color-primary) 78%, #181818)
+    );
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    background-position: left center;
+    padding: 0.22em 0.28em;
+    margin: 0 -0.1em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-size var(--hl-ms) cubic-bezier(0.19, 1, 0.22, 1);
+    transition-delay: 80ms;
+  }
+
+  mark[data-hl][data-on] {
+    background-size: 100% 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    mark[data-hl] {
+      background-size: 100% 100%;
+      transition: none;
+    }
+  }
+}
