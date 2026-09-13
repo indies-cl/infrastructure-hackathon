@@ -173,10 +173,11 @@ export default function App() {
         <Section id="por-que" title="Por qué">
           <div className="max-w-[40rem] space-y-6 font-mono text-base leading-7 text-[#d6d4d0] md:leading-8">
             <p>
-              <Highlight>Lo que frena a un agente no es el modelo.</Highlight>{' '}
-              Es poder usarlo en un sistema real. Datos públicos que no se
-              pueden consultar, empresas cuyos procesos no se pueden operar,
-              herramientas que no llegan a producción.
+              <Highlight>
+                Un agente se frena cuando no puede entrar a un sistema real.
+              </Highlight>{' '}
+              Datos públicos que no se consultan, procesos de empresa que no se
+              operan, herramientas que no llegan a producción.
             </p>
             <p className={MUTED}>
               El 7 y 8 de noviembre de 2026, en Santiago, unos 500 participantes
@@ -257,10 +258,8 @@ export default function App() {
         <Section id="sponsors" title="Por qué patrocinar">
           <p className="max-w-[40rem] font-mono text-base leading-7 text-[#d6d4d0] md:leading-8">
             Durante 24 horas, equipos seleccionados van a construir sobre
-            herramientas reales. Un sponsor no solo aparece en el sitio.{' '}
-            <Highlight>
-              Pone su tecnología en manos de quienes pueden probarla.
-            </Highlight>
+            herramientas reales.{' '}
+            <Highlight>Un sponsor pone su tecnología en esas manos.</Highlight>
           </p>
           <ul className="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
             {SPONSOR_VALUE.map(([title, copy]) => (

@@ -2,7 +2,7 @@ import { type ReactNode } from 'react'
 import { AsciiField } from './AsciiField'
 
 /** Previous flag clip: `/brand/stage.mp4` + `/brand/stage.jpg` (Pexels 20452931). */
-const STAGE = {
+export const STAGE = {
   src: '/brand/stage-313898.mp4',
   poster: '/brand/stage-313898.jpg',
 } as const
