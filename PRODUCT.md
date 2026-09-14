@@ -22,17 +22,17 @@ The event is built from Latin America, not imported. It is about agents that hav
 
 ## Operating Context
 
-Read on a laptop, often forwarded in Slack or email. Spanish. One page, no account, no app.
+Read on a laptop, often forwarded in Slack or email. English. One page, no account, no app.
 
 ## Capabilities and Constraints
 
-- Facts that may be stated: 7–8 nov 2026, Santiago, 24 hours, ~500 participants, teams of 2–4, application-based selection, three proposed tracks, evaluation criteria, sponsor tiers (bronce / plata / oro) without prices, $10k already raised, contact benjamin@velum-labs.com and LinkedIn.
+- Facts that may be stated: 7–8 nov 2026, Santiago, 24 hours, ~500 participants, teams of 2–4, application-based selection, three proposed tracks, evaluation criteria, sponsor tiers (bronze / silver / gold) without prices, $10k already raised, contact benjamin@velum-labs.com and LinkedIn.
 - Do not invent venue address, prize pool, ticket prices, sponsor logos, named judges, or a full agenda.
-- Do not invent English as the voice; the page is in Spanish.
+- Keep the English casual, direct, and human, matching the original Spanish tone.
 
 ## Brand Commitments
 
-- Name: Infrastructure Hackathon. Hero lockup and one-liner may be English; the document stays Spanish.
+- Name: Infrastructure Hackathon. The page is in English, keeping the direct, casual tone of the original Spanish.
 - Voice: direct, specific, no CLI cosplay, no lowercase-for-style, no fake terminal chrome.
 - Craft bar the user named: [on-site.platan.us](https://on-site.platan.us/) for the locked hero and [kernel.platan.us](https://kernel.platan.us/) for the document. Same principles — readable type, facts first, restraint, air around the important line. The document should feel heavier and more readable than those two, not techy or cheap.
 
