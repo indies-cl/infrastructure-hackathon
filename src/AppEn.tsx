@@ -14,57 +14,57 @@ const INVERT =
   'no-underline transition-[background-color,color] duration-75 ease-linear hover:bg-[#d6d4d0] hover:text-[#181818] focus-visible:bg-[#d6d4d0] focus-visible:text-[#181818] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#6d4aff]'
 
 const STATS = [
-  ['24', 'Horas'],
-  ['~500', 'Participantes'],
-  ['10 mil', 'USD ya levantados'],
+  ['24', 'Hours'],
+  ['~500', 'Participants'],
+  ['10k', 'USD already raised'],
   ['3', 'Tracks'],
 ] as const
 
 const SPONSOR_VALUE = [
   [
-    'Uso de producto',
-    'Tu tecnología puesta a prueba por equipos que construyen durante 24 horas.',
+    'Product in action',
+    'Teams putting your technology to work for 24 hours.',
   ],
   [
-    'Talento',
-    'Conexión directa con talento técnico seleccionado antes y durante el evento.',
+    'Talent',
+    'Meet selected technical talent before and during the event.',
   ],
   [
-    'Casos reales',
-    'Prototipos construidos sobre tu tecnología para problemas de gobierno y empresa.',
+    'Real use cases',
+    'Prototypes built on your technology to tackle problems in government and business.',
   ],
   [
-    'Participación',
-    'Auspicia un desafío o premio, o comparte tu producto en una charla o workshop.',
+    'Get involved',
+    'Back a challenge or prize, or share your product in a talk or workshop.',
   ],
 ] as const
 
 const ASKS = [
   [
     '01',
-    'Financiamiento',
-    'Efectivo para operación, comida y premios. Ya hay 10 mil USD.',
+    'Funding',
+    'Money for logistics, food, and prizes. We already have $10k.',
   ],
   [
     '02',
-    'Créditos',
-    'Para unos 500 participantes, o para los tres equipos ganadores.',
+    'Credits',
+    'For around 500 participants, or for the three winning teams.',
   ],
-  ['03', 'Sede', 'Un espacio con mesas, internet y enchufes.'],
+  ['03', 'Venue', 'A space with tables, internet, and power outlets.'],
 ] as const
 
 const ORGS = [
   [
     'Velum Labs',
-    'Startup de San Francisco. 18ª chilena en Y Combinator, 2025.',
+    'San Francisco startup. The 18th Chilean company to join Y Combinator, in 2025.',
   ],
   [
     'Indies',
-    'Comunidad de emprendimiento tech en Chile, ~3000 miembros. Organizó el hackathon de impacto social más grande de LatAm: cinco países y ~50 mil USD en premios.',
+    'A tech entrepreneurship community in Chile with ~3,000 members. Ran the largest social impact hackathon in Latin America: five countries and ~$50k in prizes.',
   ],
   [
     'Alianza Emprende',
-    'Founders de 12 universidades. En 2026: ~3000 inscritos y más de 1800 asistentes.',
+    'Founders from 12 universities. In 2026: ~3,000 signups and over 1,800 attendees.',
   ],
 ] as const
 
@@ -72,17 +72,17 @@ const TRACKS = [
   [
     '01',
     'Agent-ready government',
-    'Datos y sistemas públicos que un agente pueda consultar y operar.',
+    'Public data and systems that agents can access and work with.',
   ],
   [
     '02',
     'Agent-ready business',
-    'Agentes conectados a los datos y procesos de empresas reales.',
+    'Agents connected to data and workflows at real businesses.',
   ],
   [
     '03',
     'Agent infrastructure',
-    'Herramientas para crear, desplegar y operar agentes.',
+    'Tools to build, deploy, and run agents.',
   ],
 ] as const
 
@@ -93,22 +93,22 @@ const TIERS: {
   label: string
 }[] = [
   {
-    title: 'Bronce',
-    copy: 'Marca en el sitio y materiales del evento, y conexión con equipos y talento interesado.',
+    title: 'Bronze',
+    copy: 'Your brand on the site and event materials, plus introductions to teams and talent interested in what you do.',
     metal: 'bronze',
-    label: 'Indio Pícaro en bronce',
+    label: 'Bronze Indio Pícaro',
   },
   {
-    title: 'Plata',
-    copy: 'Todo Bronce, más un desafío o premio y una charla o workshop.',
+    title: 'Silver',
+    copy: 'Everything in Bronze, plus a challenge or prize and a talk or workshop.',
     metal: 'silver',
-    label: 'Indio Pícaro en plata',
+    label: 'Silver Indio Pícaro',
   },
   {
-    title: 'Oro',
-    copy: 'Todo Plata, más protagonismo en un track y conexión prioritaria con talento seleccionado.',
+    title: 'Gold',
+    copy: 'Everything in Silver, plus a leading role in a track and priority introductions to selected talent.',
     metal: 'gold',
-    label: 'Indio Pícaro en oro',
+    label: 'Gold Indio Pícaro',
   },
 ]
 
@@ -138,19 +138,19 @@ function Section({
   )
 }
 
-export default function App() {
+export default function AppEn() {
   return (
     <div className={`min-h-svh bg-[#181818] ${INK}`}>
       <a
         className="sr-only focus:not-sr-only focus:absolute focus:top-5 focus:left-4 focus:z-[80] focus:bg-[#d6d4d0] focus:px-2 focus:text-base focus:leading-[18px] focus:text-[#181818]"
         href="#contenido"
       >
-        Ir al contenido
+        Skip to content
       </a>
 
       <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-5">
         <p className="whitespace-nowrap font-mono text-base leading-[18px] tabular-nums">
-          7–8 Nov 2026. Santiago de Chile
+          7–8 Nov 2026. Santiago, Chile
         </p>
       </header>
 
@@ -162,7 +162,7 @@ export default function App() {
               <span className="mt-1 block">Hackathon</span>
             </>
           }
-          subtitle="24 horas, ~500 participantes, infraestructura para la era de la IA."
+          subtitle="24 hours, ~500 participants, infrastructure for the AI era."
         />
       </div>
 
@@ -170,25 +170,25 @@ export default function App() {
         id="contenido"
         className="relative z-20 mx-auto w-full max-w-[1060px] px-5 pt-20 pb-28 sm:px-8 md:px-10 md:pt-28 md:pb-36"
       >
-        <Section id="por-que" title="Por qué">
+        <Section id="por-que" title="Why">
           <div className="max-w-[40rem] space-y-6 font-mono text-base leading-7 text-[#d6d4d0] md:leading-8">
             <p>
               <Highlight>
-                Un agente se frena cuando no puede entrar a un sistema real.
+                An agent gets stuck when it can't access a real system.
               </Highlight>{' '}
-              Datos públicos que no se consultan, procesos de empresa que no se
-              operan, herramientas que no llegan a producción.
+              Public data it can't query, business workflows it can't run,
+              tools that never make it to production.
             </p>
             <p className={MUTED}>
-              El 7 y 8 de noviembre de 2026, en Santiago, unos 500 participantes
-              van a trabajar 24 horas sobre esa infraestructura. Equipos de 2
-              a 4, seleccionados por postulación.
+              On November 7–8, 2026, around 500 participants will spend 24 hours
+              building that infrastructure in Santiago. Teams of 2–4,
+              selected through applications.
             </p>
           </div>
         </Section>
 
         <section
-          aria-label="Cifras"
+          aria-label="By the numbers"
           className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 md:mt-24 md:grid-cols-4 md:gap-x-10"
         >
           {STATS.map(([value, label]) => (
@@ -205,7 +205,7 @@ export default function App() {
           ))}
         </section>
 
-        <Section id="organizadores" title="Quién lo organiza">
+        <Section id="organizadores" title="Who’s behind it">
           <ul className="grid gap-10 md:grid-cols-3 md:gap-12">
             {ORGS.map(([title, copy]) => (
               <li key={title}>
@@ -255,11 +255,10 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="sponsors" title="Por qué patrocinar">
+        <Section id="sponsors" title="Why sponsor">
           <p className="max-w-[40rem] font-mono text-base leading-7 text-[#d6d4d0] md:leading-8">
-            Durante 24 horas, equipos seleccionados van a construir sobre
-            herramientas reales.{' '}
-            <Highlight>Un sponsor pone su tecnología en esas manos.</Highlight>
+            For 24 hours, selected teams will build with real tools.{' '}
+            <Highlight>As a sponsor, you put your technology in their hands.</Highlight>
           </p>
           <ul className="mt-12 grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12">
             {SPONSOR_VALUE.map(([title, copy]) => (
@@ -277,7 +276,7 @@ export default function App() {
           </ul>
         </Section>
 
-        <Section id="pedimos" title="Qué pedimos">
+        <Section id="pedimos" title="What we need">
           <ol className="grid gap-10 md:gap-12">
             {ASKS.map(([n, title, copy]) => (
               <li
@@ -302,7 +301,7 @@ export default function App() {
           </ol>
         </Section>
 
-        <Section id="niveles" title="Cómo patrocinar">
+        <Section id="niveles" title="How to sponsor">
           <ul className="grid gap-10 md:grid-cols-3 md:gap-12">
             {TIERS.map(({ title, copy, metal, label }) => (
               <li key={title}>
@@ -320,11 +319,11 @@ export default function App() {
           </ul>
         </Section>
 
-        <Section id="escribir" title="Escribir a Benjamin">
+        <Section id="escribir" title="Talk to Benjamin">
           <p className={`mb-6 max-w-[40rem] font-mono text-base leading-7 ${MUTED}`}>
             <Highlight>
-              Los desafíos, premios y espacios del evento se definen junto a
-              los sponsors que se suman temprano.
+              Sponsors who join early help shape the challenges, prizes,
+              and spaces at the event.
             </Highlight>
           </p>
           <p className="max-w-[40rem] font-mono text-base leading-7">
@@ -334,7 +333,7 @@ export default function App() {
           </p>
           <p className={`mt-5 font-mono text-base leading-7 ${MUTED}`}>
             <a className={INVERT} href={LINKEDIN} target="_blank" rel="noreferrer">
-              LinkedIn de Benjamin
+              Benjamin’s LinkedIn
             </a>
           </p>
         </Section>

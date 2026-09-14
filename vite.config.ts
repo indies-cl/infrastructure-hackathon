@@ -4,4 +4,12 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  build: {
+    rolldownOptions: {
+      input: {
+        main: 'index.html',
+        en: 'en/index.html',
+      },
+    },
+  },
 })

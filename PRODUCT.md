@@ -22,7 +22,7 @@ The event is built from Latin America, not imported. It is about agents that hav
 
 ## Operating Context
 
-Read on a laptop, often forwarded in Slack or email. English. One page, no account, no app.
+Read on a laptop, often forwarded in Slack or email. Spanish at /, with a separate English page at /en. No account, no app.
 
 ## Capabilities and Constraints
 
@@ -32,7 +32,7 @@ Read on a laptop, often forwarded in Slack or email. English. One page, no accou
 
 ## Brand Commitments
 
-- Name: Infrastructure Hackathon. The page is in English, keeping the direct, casual tone of the original Spanish.
+- Name: Infrastructure Hackathon. Keep the original Spanish page at /. The English version at /en keeps the same direct, casual tone.
 - Voice: direct, specific, no CLI cosplay, no lowercase-for-style, no fake terminal chrome.
 - Craft bar the user named: [on-site.platan.us](https://on-site.platan.us/) for the locked hero and [kernel.platan.us](https://kernel.platan.us/) for the document. Same principles — readable type, facts first, restraint, air around the important line. The document should feel heavier and more readable than those two, not techy or cheap.
 
