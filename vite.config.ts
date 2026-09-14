@@ -8,7 +8,7 @@ export default defineConfig({
     rolldownOptions: {
       input: {
         main: 'index.html',
-        en: 'en/index.html',
+        en: 'en.html',
       },
     },
   },
