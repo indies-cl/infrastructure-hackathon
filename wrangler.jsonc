@@ -2,11 +2,14 @@
   "name": "infrastructure-hackathon",
   "account_id": "42b4924619f529a17513a35253e67c52",
   "compatibility_date": "2026-09-12",
+  "main": "worker.ts",
   "workers_dev": true,
   "preview_urls": true,
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "single-page-application",
+    "run_worker_first": true,
   },
   "routes": [
     {
