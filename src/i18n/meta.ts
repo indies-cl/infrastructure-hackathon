@@ -18,6 +18,24 @@ export const META: Record<
   },
 }
 
+export const HOME_META: Record<
+  Locale,
+  { title: string; description: string; ogLocale: string }
+> = {
+  en: {
+    title: 'Infrastructure Hackathon — Apply to build, 7–8 Nov 2026, Santiago',
+    description:
+      '24 hours in Santiago building infrastructure agents can actually use. Teams of 2–4, three tracks. Apply to build. 7–8 Nov 2026.',
+    ogLocale: 'en_US',
+  },
+  es: {
+    title: 'Infrastructure Hackathon — Postula para construir, 7–8 nov 2026, Santiago',
+    description:
+      '24 horas en Santiago construyendo infraestructura que un agente pueda usar de verdad. Equipos de 2 a 4, tres tracks. Postula para construir. 7–8 nov 2026.',
+    ogLocale: 'es_CL',
+  },
+}
+
 export const OG_LOCALE_ALTERNATE: Record<Locale, string> = {
   en: 'es_CL',
   es: 'en_US',

@@ -14,6 +14,18 @@ export function localePath(locale: Locale): string {
   return `/${locale}`
 }
 
+/** Parse the locale from a world-facing home route (`/en/home`, `/es/home`). */
+export function homePathLocale(pathname: string): Locale | null {
+  const path = pathname.replace(/\/+$/, '') || '/'
+  if (path === '/en/home') return 'en'
+  if (path === '/es/home') return 'es'
+  return null
+}
+
+export function homePath(locale: Locale): string {
+  return `/${locale}/home`
+}
+
 export function htmlLang(locale: Locale): string {
   return locale === 'es' ? 'es-CL' : 'en'
 }

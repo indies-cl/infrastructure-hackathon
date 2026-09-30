@@ -1,5 +1,6 @@
-import { META, OG_LOCALE_ALTERNATE } from './src/i18n/meta'
+import { HOME_META, META, OG_LOCALE_ALTERNATE } from './src/i18n/meta'
 import {
+  homePathLocale,
   htmlLang,
   negotiateLocale,
   pathLocale,
@@ -15,10 +16,15 @@ interface Env {
   }
 }
 
-function applyLocaleHtml(html: string, locale: Locale, origin: string): string {
-  const meta = META[locale]
-  const page = `${origin}/${locale}`
+function applyLocaleHtml(
+  html: string,
+  locale: Locale,
+  page: string,
+  meta: { title: string; description: string; ogLocale: string },
+  section: '' | '/home' = '',
+): string {
   const alt = OG_LOCALE_ALTERNATE[locale]
+  const origin = 'https://infra.indies.cl'
   return html
     .replace(/<html lang="[^"]*">/, `<html lang="${htmlLang(locale)}">`)
     .replace(/<title>[^<]*<\/title>/, `<title>${meta.title}</title>`)
@@ -49,6 +55,18 @@ function applyLocaleHtml(html: string, locale: Locale, origin: string): string {
     .replace(
       /(<link\s+rel="canonical"\s+href=")[^"]*("\s*\/>)/,
       `$1${page}$2`,
+    )
+    .replace(
+      /(<link\s+rel="alternate"\s+hreflang="en"\s+href=")[^"]*("\s*\/>)/,
+      `$1${origin}/en${section}$2`,
+    )
+    .replace(
+      /(<link\s+rel="alternate"\s+hreflang="es"\s+href=")[^"]*("\s*\/>)/,
+      `$1${origin}/es${section}$2`,
+    )
+    .replace(
+      /(<link\s+rel="alternate"\s+hreflang="x-default"\s+href=")[^"]*("\s*\/>)/,
+      `$1${origin}/en${section}$2`,
     )
 }
 
@@ -90,18 +108,41 @@ export default {
       return env.ASSETS.fetch(request)
     }
 
-    if (path === '/') {
+    if (path === '/' || path === '/home') {
       const locale = negotiateLocale(
         request.headers.get('cookie'),
         request.headers.get('accept-language'),
       )
-      const location = new URL(`/${locale}${url.search}`, url.origin)
+      const dest = path === '/home' ? `/${locale}/home` : `/${locale}`
+      const location = new URL(`${dest}${url.search}`, url.origin)
       return new Response(null, {
         status: 302,
         headers: {
           Location: location.toString(),
           'Cache-Control': 'private, no-store',
           Vary: 'Accept-Language, Cookie',
+        },
+      })
+    }
+
+    const homeLocale = homePathLocale(path)
+    if (homeLocale) {
+      const page = await env.ASSETS.fetch(new URL('/index.html', url.origin))
+      let html = await page.text()
+      html = applyLocaleHtml(
+        html,
+        homeLocale,
+        `${url.origin}/${homeLocale}/home`,
+        HOME_META[homeLocale],
+        '/home',
+      )
+      html = applyShareImages(html, ua)
+
+      return new Response(html, {
+        headers: {
+          'content-type': 'text/html;charset=utf-8',
+          'cache-control': 'public, max-age=0, must-revalidate',
+          vary: 'Accept-Language, User-Agent',
         },
       })
     }
@@ -113,7 +154,7 @@ export default {
 
     const page = await env.ASSETS.fetch(new URL('/index.html', url.origin))
     let html = await page.text()
-    html = applyLocaleHtml(html, locale, url.origin)
+    html = applyLocaleHtml(html, locale, `${url.origin}/${locale}`, META[locale])
     html = applyShareImages(html, ua)
 
     return new Response(html, {
