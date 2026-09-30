@@ -9,4 +9,4 @@ export const METALS: Record<
   gold: { color: 0xd4af37, roughness: 0.22, metalness: 1 },
 }
 
-export const PICARO_SRC = '/models/indio-picaro.glb'
+export const PICARO_SRC = '/models/a_cool_little_cup_just_for_fun.glb'

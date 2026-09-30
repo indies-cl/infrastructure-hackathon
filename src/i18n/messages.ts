@@ -372,17 +372,17 @@ export const messages: Record<Locale, Messages> = {
       {
         title: 'Bronze',
         copy: 'Your name on the site and at the event, plus intros to teams and people who want to talk.',
-        label: 'Indio Pícaro in bronze',
+        label: 'Bronze cup',
       },
       {
         title: 'Silver',
         copy: 'Bronze, plus a challenge or prize and a talk or workshop.',
-        label: 'Indio Pícaro in silver',
+        label: 'Silver cup',
       },
       {
         title: 'Gold',
         copy: 'Silver, plus you own a track, and you meet the people we already picked first.',
-        label: 'Indio Pícaro in gold',
+        label: 'Gold cup',
       },
     ],
     writeTitle: 'Be a sponsor',
@@ -490,17 +490,17 @@ export const messages: Record<Locale, Messages> = {
       {
         title: 'Bronce',
         copy: 'Tu nombre en el sitio y en el evento, más intros con equipos y gente que quiere conversar.',
-        label: 'Indio Pícaro en bronce',
+        label: 'Copa de bronce',
       },
       {
         title: 'Plata',
         copy: 'Bronce, más un desafío o premio y una charla o workshop.',
-        label: 'Indio Pícaro en plata',
+        label: 'Copa de plata',
       },
       {
         title: 'Oro',
         copy: 'Plata, más un track a tu nombre, y conoces primero a la gente que ya escogimos.',
-        label: 'Indio Pícaro en oro',
+        label: 'Copa de oro',
       },
     ],
     writeTitle: 'Súmate como sponsor',

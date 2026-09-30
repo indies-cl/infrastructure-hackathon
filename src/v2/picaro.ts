@@ -29,6 +29,12 @@ export function clonePicaro(gltf: GLTF, metal: Metal) {
   root.traverse((obj) => {
     if (!isMesh(obj)) return
     const prev = obj.material as MeshStandardMaterial
+    obj.castShadow = false
+    obj.receiveShadow = false
+    if (prev.name === 'wood') {
+      obj.material = prev.clone()
+      return
+    }
     obj.material = new MeshPhysicalMaterial({
       color: look.color,
       metalness: look.metalness,
@@ -42,8 +48,6 @@ export function clonePicaro(gltf: GLTF, metal: Metal) {
       clearcoat: 0.12,
       clearcoatRoughness: 0.4,
     })
-    obj.castShadow = false
-    obj.receiveShadow = false
   })
 
   return root
