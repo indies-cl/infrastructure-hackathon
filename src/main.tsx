@@ -27,7 +27,7 @@ if (path === '/flag') {
       <Flag />
     </StrictMode>,
   )
-} else if (path === '/home') {
+} else if (path === '/' || path === '/home') {
   window.location.replace(
     `/${negotiated()}/home${window.location.search}${window.location.hash}`,
   )

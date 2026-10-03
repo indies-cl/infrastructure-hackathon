@@ -113,7 +113,7 @@ export default {
         request.headers.get('cookie'),
         request.headers.get('accept-language'),
       )
-      const dest = path === '/home' ? `/${locale}/home` : `/${locale}`
+      const dest = `/${locale}/home`
       const location = new URL(`${dest}${url.search}`, url.origin)
       return new Response(null, {
         status: 302,
