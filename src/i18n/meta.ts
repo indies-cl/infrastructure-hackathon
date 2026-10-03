@@ -23,15 +23,15 @@ export const HOME_META: Record<
   { title: string; description: string; ogLocale: string }
 > = {
   en: {
-    title: 'Infrastructure Hackathon — Apply to build, 7–8 Nov 2026, Santiago',
+    title: 'Infrastructure Hackathon — The biggest hackathon in Chile',
     description:
-      '24 hours in Santiago building infrastructure agents can actually use. Teams of 2–4, three tracks. Apply to build. 7–8 Nov 2026.',
+      'An infrastructure hackathon in Santiago, 7–8 Nov 2026. Devtools and agents. Teams of 2 to 4, application only.',
     ogLocale: 'en_US',
   },
   es: {
-    title: 'Infrastructure Hackathon — Postula para construir, 7–8 nov 2026, Santiago',
+    title: 'Infrastructure Hackathon — La hackathon más grande de Chile',
     description:
-      '24 horas en Santiago construyendo infraestructura que un agente pueda usar de verdad. Equipos de 2 a 4, tres tracks. Postula para construir. 7–8 nov 2026.',
+      'Una hackathon de infraestructura en Santiago, 7 y 8 de noviembre de 2026. Devtools y agentes. Equipos de 2 a 4, solo por postulación.',
     ogLocale: 'es_CL',
   },
 }

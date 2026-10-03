@@ -30,248 +30,73 @@ export type Messages = {
   seeOther: string
 }
 
-/**
- * World-facing landing page (participants). Concept: an agent keeps hitting
- * real government/business systems and getting locked out — the hackathon is
- * the unlock. Copy is written to that frame, not the sponsor deck.
- */
+export type OrgId = 'velum' | 'indies' | 'ae'
+
+/** World-facing homepage. The sponsor deck stays at /en and /es. */
 export type HomeMessages = {
   skip: string
-  applyCta: string
-  place: string
-  heroLine1: string
-  heroLine2: string
+  heroDate: string
+  heroTitle: string
   heroSub: string
-  bootLines: string[]
-  thesisLead: string
-  thesisHighlight: string
-  thesisBody: string
-  tracksTitle: string
-  tracks: { n: string; code: string; title: string; copy: string }[]
-  statsLabel: string
-  stats: { value: string; label: string }[]
-  whoTitle: string
-  orgs: { title: string; copy: string }[]
-  formatTitle: string
-  format: { n: string; title: string; copy: string }[]
-  faqTitle: string
-  faq: { q: string; a: string }[]
-  applyTitle: string
-  applyLead: string
-  applyHighlight: string
-  sponsorLink: string
+  register: string
+  participants: string
+  sponsor: string
+  companies: string
+  stuckLead: string
+  stuckBody: string
+  facts: string
+  handLabel: string
+  orgs: Record<OrgId, string>
   seeOther: string
 }
 
 export const homeMessages: Record<Locale, HomeMessages> = {
   en: {
     skip: 'Skip to content',
-    applyCta: 'Apply to build',
-    place: '7–8 Nov 2026 · Santiago, Chile',
-    heroLine1: 'Agents keep',
-    heroLine2: 'hitting the wall.',
+    heroDate: 'November 7–8, Santiago, Chile',
+    heroTitle: 'The biggest hackathon in Chile, ever',
     heroSub:
-      'Real systems say no to machines. 24 hours in Santiago to build the way through.',
-    bootLines: [
-      '// the agent is ready. the world is not.',
-      '// public data nobody can query.',
-      '// company systems nobody can reach.',
-      '> loading the fix: 7–8 nov 2026, santiago …',
-    ],
-    thesisLead: 'An agent is only as good as what it can reach.',
-    thesisHighlight: 'Right now it can barely reach anything real.',
-    thesisBody:
-      'For 24 hours, teams of 2 to 4 build the missing layer: data an agent can query, systems it can act on, tools that actually ship.',
-    tracksTitle: 'Three systems to break open',
-    tracks: [
-      {
-        n: '01',
-        code: 'GET  gov/*',
-        title: 'Agent-ready government',
-        copy: 'Public data and systems an agent can actually look up and act on.',
-      },
-      {
-        n: '02',
-        code: 'POST business/*',
-        title: 'Agent-ready business',
-        copy: 'Agents wired into real company data and workflows.',
-      },
-      {
-        n: '03',
-        code: 'RUN  agents/*',
-        title: 'Agent infrastructure',
-        copy: 'The tools for building, shipping, and running agents.',
-      },
-    ],
-    statsLabel: 'Numbers',
-    stats: [
-      { value: '24', label: 'Hours straight' },
-      { value: '~500', label: 'Builders' },
-      { value: '2–4', label: 'Per team' },
-      { value: '3', label: 'Tracks' },
-    ],
-    whoTitle: 'Who opens the door',
-    orgs: [
-      {
-        title: 'Velum Labs (YC W26)',
-        copy: 'AI startup, Chilean founders. First into YC in almost three years.',
-      },
-      {
-        title: 'indies.cl',
-        copy: 'Startup community running in-person events. Last hackathon was the biggest social-impact one in Latin America, five countries.',
-      },
-      {
-        title: 'Alianza Emprende',
-        copy: 'Every university entrepreneurship club in Chile. In 2026: ~3000 signed up, 1800+ showed up.',
-      },
-    ],
-    formatTitle: 'How the 24 hours run',
-    format: [
-      {
-        n: '01',
-        title: 'Apply with your team',
-        copy: 'Tell us who you are and what you want to break open. We pick the teams.',
-      },
-      {
-        n: '02',
-        title: 'Build on site',
-        copy: 'Two days in Santiago, 7–8 Nov 2026. Food, space, and mentors covered.',
-      },
-      {
-        n: '03',
-        title: 'Ship and demo',
-        copy: 'Show what an agent can now do that it couldn’t before. Best per track wins.',
-      },
-    ],
-    faqTitle: 'Before you apply',
-    faq: [
-      {
-        q: 'Who can come?',
-        a: 'Anyone who can build: students, engineers, founders, designers. You apply, we pick teams of 2 to 4.',
-      },
-      {
-        q: 'How much does it cost?',
-        a: 'Nothing to take part. If you’re selected, food and space are covered.',
-      },
-      {
-        q: 'Do I need a team already?',
-        a: 'Apply with 2 to 4 people. Coming solo? Tell us and we help you find one.',
-      },
-      {
-        q: 'What do I bring?',
-        a: 'Your laptop and whatever you code with. We handle the rest.',
-      },
-    ],
-    applyTitle: 'Get in',
-    applyLead:
-      'Applications are open. Grab your team, pick a system, tell us what you’ll break open. Spots are limited and we pick the teams.',
-    applyHighlight: 'Applications reviewed as they come in.',
-    sponsorLink: 'Here to sponsor instead?',
+      'An infrastructure hackathon focused on building the future of business. Devtools, agents.',
+    register: 'Register your team',
+    participants: 'Participants',
+    sponsor: 'I want to sponsor',
+    companies: 'Companies',
+    stuckLead: "Agents get stuck when they can't access real systems.",
+    stuckBody:
+      'Public data nobody can query, internal processes nobody can run, and tools that never make it into production.',
+    facts:
+      'On 7–8 Nov 2026 in Santiago, around 500 people will spend 24 hours tackling that. Teams of 2 to 4. Application only.',
+    handLabel: 'A hand moving, drawn in ASCII.',
+    orgs: {
+      velum: 'AI startup, Chilean founders. First into YC in almost three years.',
+      indies:
+        'Startup community running in-person events. Last hackathon was the biggest social-impact one in Latin America, five countries.',
+      ae: 'Every university entrepreneurship club in Chile. In 2026: ~3000 signed up, 1800+ showed up.',
+    },
     seeOther: 'En español',
   },
   es: {
     skip: 'Saltar al contenido',
-    applyCta: 'Postula para construir',
-    place: '7–8 nov 2026 · Santiago, Chile',
-    heroLine1: 'Los agentes',
-    heroLine2: 'chocan con el muro.',
+    heroDate: '7 y 8 de noviembre, Santiago, Chile',
+    heroTitle: 'La hackathon más grande de la historia de Chile',
     heroSub:
-      'Los sistemas reales le dicen que no a las máquinas. 24 horas en Santiago para abrir el paso.',
-    bootLines: [
-      '// el agente está listo. el mundo no.',
-      '// datos públicos que nadie puede consultar.',
-      '// sistemas de empresa que nadie puede alcanzar.',
-      '> cargando la solución: 7–8 nov 2026, santiago …',
-    ],
-    thesisLead: 'Un agente vale lo que puede alcanzar.',
-    thesisHighlight: 'Hoy casi no puede alcanzar nada real.',
-    thesisBody:
-      'Durante 24 horas, equipos de 2 a 4 construyen la capa que falta: datos que un agente pueda consultar, sistemas donde pueda actuar, herramientas que de verdad salgan.',
-    tracksTitle: 'Tres sistemas para abrir',
-    tracks: [
-      {
-        n: '01',
-        code: 'GET  gov/*',
-        title: 'Agent-ready government',
-        copy: 'Datos y sistemas públicos que un agente pueda consultar y usar de verdad.',
-      },
-      {
-        n: '02',
-        code: 'POST business/*',
-        title: 'Agent-ready business',
-        copy: 'Agentes conectados a los datos y procesos de empresas reales.',
-      },
-      {
-        n: '03',
-        code: 'RUN  agents/*',
-        title: 'Agent infrastructure',
-        copy: 'Las herramientas para armar, publicar y correr agentes.',
-      },
-    ],
-    statsLabel: 'Números',
-    stats: [
-      { value: '24', label: 'Horas seguidas' },
-      { value: '~500', label: 'Builders' },
-      { value: '2–4', label: 'Por equipo' },
-      { value: '3', label: 'Tracks' },
-    ],
-    whoTitle: 'Quién abre la puerta',
-    orgs: [
-      {
-        title: 'Velum Labs (YC W26)',
-        copy: 'Startup de IA, founders chilenos. Los primeros en entrar a YC en casi tres años.',
-      },
-      {
-        title: 'indies.cl',
-        copy: 'Comunidad de startups con eventos presenciales. La última hackathon fue la de impacto social más grande de Latinoamérica, en cinco países.',
-      },
-      {
-        title: 'Alianza Emprende',
-        copy: 'Todos los clubes de emprendimiento universitarios de Chile. En 2026: ~3000 inscritos, 1800+ asistentes.',
-      },
-    ],
-    formatTitle: 'Cómo corren las 24 horas',
-    format: [
-      {
-        n: '01',
-        title: 'Postula con tu equipo',
-        copy: 'Cuéntanos quién eres y qué quieres abrir. Nosotros elegimos los equipos.',
-      },
-      {
-        n: '02',
-        title: 'Construye en el lugar',
-        copy: 'Dos días en Santiago, 7–8 nov 2026. Comida, espacio y mentores cubiertos.',
-      },
-      {
-        n: '03',
-        title: 'Publica y muestra',
-        copy: 'Muestra lo que un agente ahora puede hacer y antes no. Gana el mejor por track.',
-      },
-    ],
-    faqTitle: 'Antes de postular',
-    faq: [
-      {
-        q: '¿Quién puede ir?',
-        a: 'Cualquiera que construya: estudiantes, ingenieros, founders, diseñadores. Se postula y elegimos equipos de 2 a 4.',
-      },
-      {
-        q: '¿Cuánto cuesta?',
-        a: 'Participar no cuesta nada. Si te seleccionan, la comida y el espacio están cubiertos.',
-      },
-      {
-        q: '¿Necesito equipo ya?',
-        a: 'Postula con 2 a 4 personas. ¿Vas solo? Avísanos y te ayudamos a armar uno.',
-      },
-      {
-        q: '¿Qué llevo?',
-        a: 'Tu notebook y con lo que programes. El resto lo ponemos nosotros.',
-      },
-    ],
-    applyTitle: 'Entra',
-    applyLead:
-      'Las postulaciones están abiertas. Arma tu equipo, elige un sistema y cuéntanos qué vas a abrir. Los cupos son limitados y elegimos los equipos.',
-    applyHighlight: 'Revisamos postulaciones a medida que llegan.',
-    sponsorLink: '¿Vienes a auspiciar?',
+      'Una hackathon de infraestructura para construir el futuro de los negocios. Devtools, agentes.',
+    register: 'Inscribe tu equipo',
+    participants: 'Participantes',
+    sponsor: 'Quiero auspiciar',
+    companies: 'Empresas',
+    stuckLead: 'Los agentes se traban cuando no pueden entrar a sistemas reales.',
+    stuckBody:
+      'Datos públicos que nadie puede consultar, procesos internos que nadie puede correr, y herramientas que nunca llegan a producción.',
+    facts:
+      'El 7 y 8 de noviembre de 2026, en Santiago, unas 500 personas van a pasar 24 horas en eso. Equipos de 2 a 4. Solo por postulación.',
+    handLabel: 'Una mano en movimiento, dibujada en ASCII.',
+    orgs: {
+      velum: 'Startup de IA, founders chilenos. Los primeros en entrar a YC en casi tres años.',
+      indies:
+        'Comunidad de startups con eventos presenciales. La última hackathon fue la de impacto social más grande de Latinoamérica, en cinco países.',
+      ae: 'Todos los clubes de emprendimiento universitarios de Chile. En 2026: ~3000 inscritos, 1800+ asistentes.',
+    },
     seeOther: 'In English',
   },
 }

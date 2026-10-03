@@ -33,6 +33,19 @@
   -moz-osx-font-smoothing: unset;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 2rem)));
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee var(--duration, 30s) linear infinite;
+}
+
 @layer base {
   html {
     color-scheme: dark;
@@ -68,6 +81,10 @@
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
+    }
+
+    .animate-marquee {
+      animation: none;
     }
   }
 }
