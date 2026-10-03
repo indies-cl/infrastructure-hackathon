@@ -17,6 +17,7 @@ uniform vec2 uVideoSize;
 uniform float uChars;
 uniform float uCell;
 uniform float uInvert;
+uniform float uFloor;
 
 vec2 coverUV(vec2 uv) {
   float canvasAR = uResolution.x / max(uResolution.y, 1.0);
@@ -45,7 +46,7 @@ void main() {
   vec3 purple = vec3(0.427, 0.290, 1.0);
   float red = smoothstep(0.08, 0.42, vid.r - vid.g);
   vec3 tint = mix(ink, purple, red);
-  float alpha = glyph * (0.12 + subject * 0.88);
+  float alpha = glyph * (uFloor + subject * (1.0 - uFloor));
   gl_FragColor = vec4(tint * alpha, alpha);
 }
 `
@@ -111,6 +112,7 @@ export function createAsciiVideo(
   canvas: HTMLCanvasElement,
   source: AsciiSource,
   invert = false,
+  floor = 0.12,
 ) {
   const glRaw = canvas.getContext('webgl', {
     alpha: true,
@@ -171,12 +173,14 @@ export function createAsciiVideo(
   const uChars = gl.getUniformLocation(program, 'uChars')
   const uCell = gl.getUniformLocation(program, 'uCell')
   const uInvert = gl.getUniformLocation(program, 'uInvert')
+  const uFloor = gl.getUniformLocation(program, 'uFloor')
 
   gl.uniform1i(uVideo, 0)
   gl.uniform1i(uAtlas, 1)
   gl.uniform1f(uChars, CHARS.length)
   gl.uniform1f(uCell, CELL)
   gl.uniform1f(uInvert, invert ? 1 : 0)
+  gl.uniform1f(uFloor, floor)
   gl.enable(gl.BLEND)
   gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA)
 

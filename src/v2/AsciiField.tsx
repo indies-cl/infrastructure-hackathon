@@ -12,6 +12,7 @@ export function AsciiField({
   poster,
   still = false,
   invert = false,
+  floor = 0.12,
   preload = 'metadata',
   className,
   children,
@@ -20,6 +21,8 @@ export function AsciiField({
   poster?: string
   still?: boolean
   invert?: boolean
+  /** Glyph alpha on empty pixels. 0 draws only the subject. */
+  floor?: number
   preload?: 'auto' | 'metadata' | 'none'
   className?: string
   children?: ReactNode
@@ -36,7 +39,7 @@ export function AsciiField({
     if (!stageEl || !fieldEl || !source) return
 
     const host: HTMLDivElement = stageEl
-    const field = createAsciiVideo(fieldEl, source, invert)
+    const field = createAsciiVideo(fieldEl, source, invert, floor)
     const reduce = prefersReducedMotion()
     let raf = 0
     let visible = true
@@ -132,7 +135,7 @@ export function AsciiField({
       if (source instanceof HTMLVideoElement) source.pause()
       field?.destroy()
     }
-  }, [src, still, invert])
+  }, [src, still, invert, floor])
 
   return (
     <div
