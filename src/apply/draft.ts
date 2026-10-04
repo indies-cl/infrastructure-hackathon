@@ -1,4 +1,5 @@
 import {
+  DIETS,
   GENDERS,
   TEAM_MAX,
   TEAM_SIZES,
@@ -38,13 +39,16 @@ function readMember(value: unknown): Member {
     gender: GENDERS.find((g) => g === saved.gender) ?? '',
     github: text('github'),
     email: text('email'),
+    coding: YES_NO.find((v) => v === saved.coding) ?? 'yes',
     linkedin: text('linkedin'),
     site: text('site'),
-    jobs: YES_NO.find((v) => v === saved.jobs) ?? '',
+    jobs: YES_NO.find((v) => v === saved.jobs) ?? 'yes',
     role: text('role'),
-    fun: text('fun'),
+    deep: text('deep'),
+    hardest: text('hardest'),
     favorite: text('favorite'),
-    hacker: text('hacker'),
+    diet: DIETS.find((d) => d === saved.diet) ?? '',
+    allergies: text('allergies'),
   }
 }
 

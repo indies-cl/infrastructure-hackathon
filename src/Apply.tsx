@@ -360,9 +360,16 @@ export default function Apply() {
                 <p className="text-base leading-6 break-words text-[#5a5956]">
                   {m.email}
                 </p>
-                <p className="text-base leading-6 break-words text-[#5a5956]">
-                  github.com/{m.github}
-                </p>
+                {m.github ? (
+                  <p className="text-base leading-6 break-words text-[#5a5956]">
+                    github.com/{m.github}
+                  </p>
+                ) : null}
+                {m.linkedin ? (
+                  <p className="text-base leading-6 break-words text-[#5a5956]">
+                    linkedin.com/in/{m.linkedin}
+                  </p>
+                ) : null}
               </div>
               <Button
                 type="button"

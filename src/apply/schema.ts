@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import {
+  DIETS,
   FIELD_ORDER,
   GENDERS,
   TEAM_SIZES,
@@ -7,6 +8,7 @@ import {
   cleanGithub,
   cleanLinkedin,
   cleanSite,
+  type Diet,
   type ErrorKey,
   type FieldKey,
   type Gender,
@@ -52,18 +54,23 @@ function validSite(value: string): boolean {
   }
 }
 
-function githubSchema(others: readonly string[]) {
+function githubSchema(others: readonly string[], required: boolean) {
   const taken = others.map(cleanGithub).filter(Boolean).map((value) => value.toLowerCase())
-  return z
-    .string()
-    .overwrite(cleanGithub)
+  const unique = (value: string, ctx: z.RefinementCtx) => {
+    if (value && taken.includes(value.toLowerCase())) {
+      ctx.addIssue({ code: 'custom', message: 'dupGithub' })
+    }
+  }
+  const cleaned = z.string().overwrite(cleanGithub)
+  if (!required) {
+    return cleaned
+      .refine((value) => value === '' || GITHUB.test(value), { error: 'github', abort: true })
+      .superRefine(unique)
+  }
+  return cleaned
     .min(1, { error: 'required', abort: true })
     .regex(GITHUB, { error: 'github', abort: true })
-    .superRefine((value, ctx) => {
-      if (taken.includes(value.toLowerCase())) {
-        ctx.addIssue({ code: 'custom', message: 'dupGithub' })
-      }
-    })
+    .superRefine(unique)
 }
 
 function emailSchema(others: readonly string[]) {
@@ -79,10 +86,15 @@ function emailSchema(others: readonly string[]) {
     })
 }
 
-const linkedinSchema = z
-  .string()
-  .overwrite(cleanLinkedin)
-  .refine((value) => value === '' || LINKEDIN.test(value), { error: 'linkedin' })
+function linkedinSchema(required: boolean) {
+  const cleaned = z.string().overwrite(cleanLinkedin)
+  if (!required) {
+    return cleaned.refine((value) => value === '' || LINKEDIN.test(value), { error: 'linkedin' })
+  }
+  return cleaned
+    .min(1, { error: 'required', abort: true })
+    .regex(LINKEDIN, { error: 'linkedin', abort: true })
+}
 
 const siteSchema = z
   .string()
@@ -101,13 +113,16 @@ const memberCleanSchema = z.object({
   gender: z.string().trim(),
   github: z.string().overwrite(cleanGithub),
   email: z.string().trim().toLowerCase(),
+  coding: z.string().trim(),
   linkedin: z.string().overwrite(cleanLinkedin),
   site: z.string().overwrite(cleanSite),
   jobs: z.string().trim(),
   role: z.string().trim(),
-  fun: z.string().trim(),
+  deep: z.string().trim(),
+  hardest: z.string().trim(),
   favorite: z.string().trim(),
-  hacker: z.string().trim(),
+  diet: z.string().trim(),
+  allergies: z.string().trim(),
 })
 
 function known<T extends string>(value: string, options: readonly T[]): T | '' {
@@ -121,29 +136,37 @@ function cleanMember(member: Member): Member {
     gender: known<Gender>(cleaned.gender, GENDERS),
     github: cleaned.github,
     email: cleaned.email,
+    coding: known<YesNo>(cleaned.coding, YES_NO),
     linkedin: cleaned.linkedin,
     site: cleaned.site,
     jobs: known<YesNo>(cleaned.jobs, YES_NO),
     role: cleaned.role,
-    fun: cleaned.fun,
+    deep: cleaned.deep,
+    hardest: cleaned.hardest,
     favorite: cleaned.favorite,
-    hacker: cleaned.hacker,
+    diet: known<Diet>(cleaned.diet, DIETS),
+    allergies: cleaned.allergies,
   }
 }
 
-function memberSchema(others: readonly Member[]) {
+function memberSchema(others: readonly Member[], coding: YesNo | '') {
+  // Unanswered still asks for GitHub. LinkedIn becomes required only when they don't code.
+  const githubRequired = coding !== 'no'
   return z.object({
     name: requiredText(),
     gender: oneOf(GENDERS),
-    github: githubSchema(others.map((member) => member.github)),
+    github: githubSchema(others.map((member) => member.github), githubRequired),
     email: emailSchema(others.map((member) => member.email)),
-    linkedin: linkedinSchema,
+    coding: oneOf(YES_NO),
+    linkedin: linkedinSchema(coding === 'no'),
     site: siteSchema,
     jobs: oneOf(YES_NO),
-    role: z.string().trim(),
-    fun: requiredText(),
+    role: requiredText(),
+    deep: requiredText(),
+    hardest: requiredText(),
     favorite: requiredText(),
-    hacker: requiredText(),
+    diet: oneOf(DIETS),
+    allergies: z.string().trim(),
   })
 }
 
@@ -152,7 +175,7 @@ function errorKey(message: string | undefined): ErrorKey | undefined {
 }
 
 function errorsFor(member: Member, others: readonly Member[]): MemberErrors {
-  const parsed = memberSchema(others).safeParse(member)
+  const parsed = memberSchema(others, member.coding).safeParse(member)
   if (parsed.success) return {}
   const errors: MemberErrors = {}
   for (const issue of parsed.error.issues) {
@@ -185,8 +208,13 @@ export function schemaIssue(schema: z.ZodType, value: unknown): ErrorKey | undef
 }
 
 /** The message for one answer. Other people's handles and emails are cleaned first. */
-export function fieldIssue(key: FieldKey, value: string, others: readonly Member[]): ErrorKey | undefined {
-  const parsed = memberSchema(others).shape[key].safeParse(value)
+export function fieldIssue(
+  key: FieldKey,
+  value: string,
+  others: readonly Member[],
+  coding: YesNo | '',
+): ErrorKey | undefined {
+  const parsed = memberSchema(others, coding).shape[key].safeParse(value)
   if (parsed.success) return undefined
   return errorKey(parsed.error.issues[0]?.message)
 }

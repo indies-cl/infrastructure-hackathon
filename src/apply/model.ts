@@ -9,18 +9,25 @@ export type Gender = (typeof GENDERS)[number]
 export const YES_NO = ['yes', 'no'] as const
 export type YesNo = (typeof YES_NO)[number]
 
+export const DIETS = ['vegan', 'veggie', 'omnivore'] as const
+export type Diet = (typeof DIETS)[number]
+
 export type Member = {
   name: string
   gender: Gender | ''
   github: string
   email: string
+  /** Whether they write code as part of their day-to-day. */
+  coding: YesNo | ''
   linkedin: string
   site: string
   jobs: YesNo | ''
   role: string
-  fun: string
+  deep: string
+  hardest: string
   favorite: string
-  hacker: string
+  diet: Diet | ''
+  allergies: string
 }
 
 export type FieldKey = keyof Member
@@ -40,15 +47,18 @@ export type MemberErrors = Partial<Record<FieldKey, ErrorKey>>
 export const FIELD_ORDER = [
   'name',
   'email',
+  'coding',
   'gender',
   'github',
   'jobs',
   'role',
-  'fun',
+  'deep',
+  'hardest',
   'favorite',
-  'hacker',
   'linkedin',
   'site',
+  'diet',
+  'allergies',
 ] as const satisfies readonly FieldKey[]
 
 export function emptyMember(): Member {
@@ -57,13 +67,16 @@ export function emptyMember(): Member {
     gender: '',
     github: '',
     email: '',
+    coding: 'yes',
     linkedin: '',
     site: '',
-    jobs: '',
+    jobs: 'yes',
     role: '',
-    fun: '',
+    deep: '',
+    hardest: '',
     favorite: '',
-    hacker: '',
+    diet: '',
+    allergies: '',
   }
 }
 

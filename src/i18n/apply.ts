@@ -1,5 +1,5 @@
 import type { Locale } from './locale'
-import type { ErrorKey, Gender, YesNo } from '../apply/model'
+import type { Diet, ErrorKey, Gender, YesNo } from '../apply/model'
 
 export type ApplyMessages = {
   home: string
@@ -29,13 +29,16 @@ export type ApplyMessages = {
     gender: { label: string; placeholder: string; options: Record<Gender, string> }
     github: { label: string; prefix: string; placeholder: string }
     email: { label: string; placeholder: string }
+    coding: { label: string; hint: string; options: Record<YesNo, string> }
     linkedin: { label: string; prefix: string; placeholder: string }
     site: { label: string; placeholder: string }
     jobs: { label: string; options: Record<YesNo, string> }
     role: { label: string; placeholder: string }
-    fun: { label: string }
+    deep: { label: string; hint: string }
+    hardest: { label: string; hint: string }
     favorite: { label: string; hint: string }
-    hacker: { label: string; hint: string }
+    diet: { label: string; options: Record<Diet, string> }
+    allergies: { label: string; hint: string }
   }
   errors: Record<ErrorKey, string>
 }
@@ -88,6 +91,11 @@ export const applyMessages: Record<Locale, ApplyMessages> = {
       },
       github: { label: 'GitHub', prefix: 'github.com/', placeholder: 'username' },
       email: { label: 'Email', placeholder: 'you@email.com' },
+      coding: {
+        label: 'Do you code in your day-to-day?',
+        hint: "If you do, we need your GitHub. If you don't, your LinkedIn.",
+        options: { yes: 'Yes', no: 'No' },
+      },
       linkedin: {
         label: 'LinkedIn',
         prefix: 'linkedin.com/in/',
@@ -103,16 +111,27 @@ export const applyMessages: Record<Locale, ApplyMessages> = {
       },
       role: {
         label: 'What is your current role?',
-        placeholder: 'e.g. student, backend at a fintech',
+        placeholder: 'e.g. biochemistry student, research at Anthropic',
       },
-      fun: { label: 'Fun fact about you' },
+      deep: {
+        label: 'What non-traditional things were you doing growing up?',
+        hint: 'Examples are running a Minecraft server, selling things online at 13, reverse-engineering a game, taking apart electronics, running a Discord community with thousands of people, or teaching yourself to code at 11.',
+      },
+      hardest: {
+        label: "What's the hardest thing you've achieved?",
+        hint: 'A place, a scholarship, a number, a rank. The one that cost you the most.',
+      },
       favorite: {
         label: "Of everything you've built, which is your favorite?",
         hint: 'A project, a product, anything. Paste a link if there is one.',
       },
-      hacker: {
-        label: 'What kind of hacker are you? What do you bring to the hackathon?',
-        hint: "Your role, what you're good at, what you add to a team.",
+      diet: {
+        label: 'Are you vegan, veggie, or omnivore?',
+        options: { vegan: 'Vegan', veggie: 'Veggie', omnivore: 'Omnivore' },
+      },
+      allergies: {
+        label: 'Any food allergies?',
+        hint: "Leave it blank if you don't have any.",
       },
     },
     errors: {
@@ -172,6 +191,11 @@ export const applyMessages: Record<Locale, ApplyMessages> = {
       },
       github: { label: 'GitHub', prefix: 'github.com/', placeholder: 'usuario' },
       email: { label: 'Email', placeholder: 'tu@correo.com' },
+      coding: {
+        label: '¿Programas en tu día a día?',
+        hint: 'Si programas, necesitamos tu GitHub. Si no, tu LinkedIn.',
+        options: { yes: 'Sí', no: 'No' },
+      },
       linkedin: {
         label: 'LinkedIn',
         prefix: 'linkedin.com/in/',
@@ -187,16 +211,27 @@ export const applyMessages: Record<Locale, ApplyMessages> = {
       },
       role: {
         label: '¿Cuál es tu rol actual?',
-        placeholder: 'Ej. estudiante, backend en una fintech',
+        placeholder: 'Ej. estudiante de bioquímica, research en Anthropic',
       },
-      fun: { label: 'Dato curioso sobre ti' },
+      deep: {
+        label: '¿Qué cosas fuera de lo común hacías mientras crecías?',
+        hint: 'Por ejemplo: administrar un servidor de Minecraft, vender cosas por internet a los 13 o hacerle ingeniería inversa a un juego.',
+      },
+      hardest: {
+        label: '¿Qué es lo más difícil que has logrado?',
+        hint: 'Un lugar, una beca, un número, un ranking. El que más te costó.',
+      },
       favorite: {
         label: 'De las cosas que has creado, ¿cuál es tu favorita?',
         hint: 'Un proyecto, un producto, lo que sea. Si hay link, pégalo.',
       },
-      hacker: {
-        label: '¿Qué tipo de hacker eres? ¿Qué traes a la hackathon?',
-        hint: 'Tu rol, lo que sabes hacer, lo que aportas a un equipo.',
+      diet: {
+        label: '¿Eres vegano, vegetariano o comes de todo?',
+        options: { vegan: 'Vegano', veggie: 'Vegetariano', omnivore: 'Como de todo' },
+      },
+      allergies: {
+        label: '¿Alguna alergia alimentaria?',
+        hint: 'Si no tienes, déjalo en blanco.',
       },
     },
     errors: {

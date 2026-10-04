@@ -1,12 +1,15 @@
 import type { ReactNode } from 'react'
+import { useStore } from '@tanstack/react-form'
 import type { ApplyMessages } from '../i18n/apply'
 import { ChoiceField, SelectField, TextArea, TextField } from './fields'
 import {
+  DIETS,
   FIELD_ORDER,
   GENDERS,
   NORMALIZE,
   YES_NO,
   fieldId,
+  type Diet,
   type FieldKey,
   type YesNo,
 } from './model'
@@ -28,11 +31,11 @@ function messageFor(
 ): string | undefined {
   const size = form.getFieldValue('size')
   if (size == null) return undefined
-  const others = form
-    .getFieldValue('members')
-    .slice(0, size)
-    .filter((_, memberIndex) => memberIndex !== index)
-  const code = fieldIssue(key, value, others)
+  const members = form.getFieldValue('members')
+  const others = members.slice(0, size).filter((_, memberIndex) => memberIndex !== index)
+  const current = members[index]?.coding
+  const coding = current === 'yes' || current === 'no' ? current : ''
+  const code = fieldIssue(key, value, others, coding)
   return code ? t.errors[code] : undefined
 }
 
@@ -101,12 +104,14 @@ function Question({
   field,
   t,
   self,
+  coding,
 }: {
   form: ApplyForm
   index: number
   field: FieldKey
   t: ApplyMessages
   self: boolean
+  coding: YesNo | ''
 }) {
   const f = t.fields
   switch (field) {
@@ -133,6 +138,28 @@ function Question({
           )}
         </Bound>
       )
+    case 'coding':
+      return (
+        <Bound form={form} index={index} field="coding" t={t}>
+          {(props) => (
+            <ChoiceField
+              id={props.id}
+              name={props.name}
+              label={f.coding.label}
+              hint={f.coding.hint}
+              value={props.value === 'yes' || props.value === 'no' ? props.value : ''}
+              error={props.error}
+              options={YES_NO.map((v) => ({ value: v, label: f.coding.options[v] }))}
+              onValueChange={(v: YesNo) => {
+                props.onValueChange(v)
+                // A yes/no flip changes which profile is required. Refresh errors already on screen.
+                void form.validateField(memberPath(index, 'github'), 'change')
+                void form.validateField(memberPath(index, 'linkedin'), 'change')
+              }}
+            />
+          )}
+        </Bound>
+      )
     case 'gender':
       return (
         <Bound form={form} index={index} field="gender" t={t}>
@@ -153,6 +180,7 @@ function Question({
             <TextField
               {...props}
               label={f.github.label}
+              optional={coding === 'no' ? t.optional : undefined}
               prefix={f.github.prefix}
               placeholder={f.github.placeholder}
               technical
@@ -183,28 +211,27 @@ function Question({
             <TextField
               {...props}
               label={f.role.label}
-              optional={t.optional}
               placeholder={f.role.placeholder}
             />
           )}
         </Bound>
       )
-    case 'fun':
+    case 'deep':
       return (
-        <Bound form={form} index={index} field="fun" t={t}>
-          {(props) => <TextArea {...props} label={f.fun.label} />}
+        <Bound form={form} index={index} field="deep" t={t}>
+          {(props) => <TextArea {...props} label={f.deep.label} hint={f.deep.hint} />}
+        </Bound>
+      )
+    case 'hardest':
+      return (
+        <Bound form={form} index={index} field="hardest" t={t}>
+          {(props) => <TextArea {...props} label={f.hardest.label} hint={f.hardest.hint} />}
         </Bound>
       )
     case 'favorite':
       return (
         <Bound form={form} index={index} field="favorite" t={t}>
           {(props) => <TextArea {...props} label={f.favorite.label} hint={f.favorite.hint} />}
-        </Bound>
-      )
-    case 'hacker':
-      return (
-        <Bound form={form} index={index} field="hacker" t={t}>
-          {(props) => <TextArea {...props} label={f.hacker.label} hint={f.hacker.hint} />}
         </Bound>
       )
     case 'linkedin':
@@ -214,7 +241,7 @@ function Question({
             <TextField
               {...props}
               label={f.linkedin.label}
-              optional={t.optional}
+              optional={coding === 'no' ? undefined : t.optional}
               prefix={f.linkedin.prefix}
               placeholder={f.linkedin.placeholder}
               technical
@@ -237,17 +264,58 @@ function Question({
           )}
         </Bound>
       )
+    case 'diet':
+      return (
+        <Bound form={form} index={index} field="diet" t={t}>
+          {(props) => (
+            <ChoiceField
+              id={props.id}
+              name={props.name}
+              label={f.diet.label}
+              value={DIETS.find((d) => d === props.value) ?? ''}
+              error={props.error}
+              options={DIETS.map((d) => ({ value: d, label: f.diet.options[d] }))}
+              onValueChange={(d: Diet) => props.onValueChange(d)}
+            />
+          )}
+        </Bound>
+      )
+    case 'allergies':
+      return (
+        <Bound form={form} index={index} field="allergies" t={t}>
+          {(props) => (
+            <TextField
+              {...props}
+              label={f.allergies.label}
+              optional={t.optional}
+              hint={f.allergies.hint}
+            />
+          )}
+        </Bound>
+      )
   }
 }
 
 export function MemberForm({ form, index, t }: Props) {
   // Browsers should fill the first person from the user's profile, not the rest.
   const self = index === 0
+  const coding = useStore(form.store, (state) => {
+    const value = state.values.members[index]?.coding
+    return value === 'yes' || value === 'no' ? value : ''
+  })
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-16">
       {FIELD_ORDER.map((key) => (
-        <Question key={key} form={form} index={index} field={key} t={t} self={self} />
+        <Question
+          key={key}
+          form={form}
+          index={index}
+          field={key}
+          t={t}
+          self={self}
+          coding={coding}
+        />
       ))}
     </div>
   )
