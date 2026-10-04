@@ -17,7 +17,7 @@ export function OrgLogo({
       <Popover.Trigger
         openOnHover
         delay={100}
-        className="block outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#6d4aff]"
+        className="block outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
         <img
           src={logo}

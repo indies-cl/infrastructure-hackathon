@@ -32,7 +32,7 @@ export type Messages = {
 
 export type OrgId = 'velum' | 'indies' | 'ae'
 
-/** World-facing homepage. The sponsor deck stays at /en and /es. */
+/** World-facing homepage. The sponsor deck lives at /sponsor. */
 export type HomeMessages = {
   skip: string
   heroDate: string

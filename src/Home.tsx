@@ -5,17 +5,8 @@ import { uiSound } from './ui-sound'
 import { AsciiField } from './v2/AsciiField'
 import { homeMessages, type OrgId } from './i18n/messages'
 import { HOME_META } from './i18n/meta'
-import {
-  LOCALE_COOKIE,
-  homePath,
-  htmlLang,
-  localePath,
-  otherLocale,
-  type Locale,
-} from './i18n/locale'
-
-const APPLY =
-  'mailto:benjamin@velum-labs.com?subject=Infrastructure%20Hackathon%20%E2%80%94%20Register%20your%20team'
+import { APPLY, SPONSOR, htmlLang, otherLocale } from './i18n/locale'
+import { useLocale } from './i18n/use-locale'
 
 /** Mixkit 40938, silhouette of hands. Free to use. Center-cropped square. */
 const HAND = {
@@ -31,37 +22,72 @@ const ORGS = [
 
 const RULE = 'border-[#d6d4d0]'
 
+const DOOR_THEME = {
+  light: {
+    box: 'hover:bg-[#e8e5df] focus-visible:bg-[#e8e5df]',
+    action: 'text-[#181818]',
+    label: 'text-[#5a5956]',
+    arrow: 'text-[#181818]',
+  },
+  brand: {
+    box: 'bg-brand hover:bg-brand-hover focus-visible:bg-brand-hover',
+    action: 'text-[#f4f2ee]',
+    label: 'text-[#ece6fb] group-hover:text-[#f4f2ee] group-focus-visible:text-[#f4f2ee]',
+    arrow: 'text-[#f4f2ee]',
+  },
+} as const
+
 function Door({
   href,
   action,
   label,
+  theme = 'light',
   className,
 }: {
   href: string
   action: string
   label: string
+  theme?: keyof typeof DOOR_THEME
   className?: string
 }) {
+  const c = DOOR_THEME[theme]
+
   return (
     <a
       href={href}
       {...uiSound}
-      className={`group flex h-full min-h-0 flex-col justify-between no-underline outline-none transition-colors duration-75 ease-linear hover:bg-[#181818] focus-visible:bg-[#181818] focus-visible:outline-2 focus-visible:outline-[#6d4aff] focus-visible:-outline-offset-2 ${className ?? ''}`}
+      className={`group flex h-full min-h-0 flex-col justify-between no-underline outline-none transition-colors duration-75 ease-linear focus-visible:outline-2 focus-visible:outline-[#181818] focus-visible:-outline-offset-2 ${c.box} ${className ?? ''}`}
     >
-      <span className="w-fit self-start font-mono text-lg leading-7 text-[#181818] transition-colors duration-75 ease-linear group-hover:text-[#f4f2ee] group-focus-visible:text-[#f4f2ee] md:text-xl lg:text-2xl lg:leading-8">
-        {action}
-      </span>
-      <span
+      <div>
+        <span
+          className={`block font-mono text-lg leading-7 transition-colors duration-75 ease-linear md:text-xl lg:text-2xl lg:leading-8 ${c.action}`}
+        >
+          {action}
+        </span>
+        <span
+          aria-hidden
+          className={`mt-1 block font-mono text-base leading-[18px] transition-colors duration-75 ease-linear ${c.label}`}
+        >
+          {label}
+        </span>
+      </div>
+      <svg
         aria-hidden
-        className="self-end font-mono text-base leading-[18px] text-[#5a5956] transition-colors duration-75 ease-linear group-hover:text-[#9a9890] group-focus-visible:text-[#9a9890]"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="square"
+        className={`size-6 self-end transition-colors duration-75 ease-linear md:size-8 ${c.arrow}`}
       >
-        {label}
-      </span>
+        <path d="M6 18L18 6M8 6h10v10" />
+      </svg>
     </a>
   )
 }
 
-export default function Home({ locale }: { locale: Locale }) {
+export default function Home() {
+  const [locale, setLocale] = useLocale()
   const t = homeMessages[locale]
   const next = otherLocale(locale)
 
@@ -123,10 +149,11 @@ export default function Home({ locale }: { locale: Locale }) {
           href={APPLY}
           action={t.register}
           label={t.participants}
+          theme="brand"
           className={`border-t px-4 pt-6 pb-3 md:col-start-2 md:row-start-1 md:border-t-0 md:border-b md:border-l md:px-6 md:pt-10 md:pb-3 ${RULE}`}
         />
         <Door
-          href={localePath(locale)}
+          href={SPONSOR}
           action={t.sponsor}
           label={t.companies}
           className={`border-t px-4 pt-6 pb-4 md:col-start-2 md:row-start-2 md:border-t-0 md:border-l md:px-6 md:pt-6 md:pb-4 ${RULE}`}
@@ -140,7 +167,7 @@ export default function Home({ locale }: { locale: Locale }) {
         <a
           href={APPLY}
           {...uiSound}
-          className="group block bg-[#f4f2ee] py-3 text-[#181818] no-underline outline-none transition-colors duration-75 ease-linear hover:bg-[#181818] hover:text-[#f4f2ee] focus-visible:bg-[#181818] focus-visible:text-[#f4f2ee] focus-visible:outline-2 focus-visible:outline-[#6d4aff] focus-visible:-outline-offset-2 md:py-3.5"
+          className="group block bg-[#f4f2ee] py-3 text-[#181818] no-underline outline-none transition-colors duration-75 ease-linear hover:bg-brand hover:text-[#f4f2ee] focus-visible:bg-brand focus-visible:text-[#f4f2ee] focus-visible:outline-2 focus-visible:outline-[#181818] focus-visible:-outline-offset-2 md:py-3.5"
         >
           <Marquee pauseOnHover className="[--duration:4s] [--gap:3rem]">
             <span className="font-mono text-base uppercase tracking-wider md:text-lg">
@@ -148,7 +175,7 @@ export default function Home({ locale }: { locale: Locale }) {
             </span>
             <span
               aria-hidden
-              className="font-mono text-base text-[#5a5956] transition-colors duration-75 ease-linear group-hover:text-[#9a9890] md:text-lg"
+              className="font-mono text-base text-[#5a5956] transition-colors duration-75 ease-linear group-hover:text-[#ece6fb] group-focus-visible:text-[#ece6fb] md:text-lg"
             >
               {'->'}
             </span>
@@ -161,7 +188,9 @@ export default function Home({ locale }: { locale: Locale }) {
         className="flex min-h-svh items-center px-4 py-12 md:px-6 md:py-16"
       >
         <div className="grid w-full items-start gap-8 md:grid-cols-[minmax(16rem,24rem)_minmax(0,1fr)] md:items-stretch md:gap-x-12">
-          <figure className={`aspect-square w-full border bg-[#181818] ${RULE}`}>
+          <figure
+            className={`aspect-square w-full border bg-brand [--ascii-bg:var(--color-brand)] ${RULE}`}
+          >
             <AsciiField
               src={HAND.src}
               poster={HAND.poster}
@@ -183,16 +212,13 @@ export default function Home({ locale }: { locale: Locale }) {
       </section>
 
       <footer className="px-4 pt-2 pb-10 md:px-6">
-        <a
-          className="font-mono text-base leading-7 text-[#5a5956] no-underline transition-[background-color,color] duration-75 ease-linear hover:bg-[#181818] hover:text-[#f4f2ee] focus-visible:bg-[#181818] focus-visible:text-[#f4f2ee] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#6d4aff]"
-          href={`${homePath(next)}${window.location.search}${window.location.hash}`}
-          hrefLang={htmlLang(next)}
-          onClick={() => {
-            document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-          }}
+        <button
+          type="button"
+          className="border-0 bg-transparent p-0 font-mono text-base leading-7 text-[#5a5956] transition-[background-color,color] duration-75 ease-linear hover:bg-[#e8e5df] hover:text-[#181818] focus-visible:bg-[#e8e5df] focus-visible:text-[#181818] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand"
+          onClick={() => setLocale(next)}
         >
           {t.seeOther}
-        </a>
+        </button>
       </footer>
     </div>
   )

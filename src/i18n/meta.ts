@@ -36,6 +36,24 @@ export const HOME_META: Record<
   },
 }
 
+export const APPLY_META: Record<
+  Locale,
+  { title: string; description: string; ogLocale: string }
+> = {
+  en: {
+    title: 'Register your team — Infrastructure Hackathon',
+    description:
+      'Register a team of 2 to 4 for the Infrastructure Hackathon, 7–8 Nov 2026 in Santiago. Application only.',
+    ogLocale: 'en_US',
+  },
+  es: {
+    title: 'Inscribe tu equipo — Infrastructure Hackathon',
+    description:
+      'Inscribe un equipo de 2 a 4 personas para la Infrastructure Hackathon, 7 y 8 de noviembre de 2026 en Santiago. Solo por postulación.',
+    ogLocale: 'es_CL',
+  },
+}
+
 export const OG_LOCALE_ALTERNATE: Record<Locale, string> = {
   en: 'es_CL',
   es: 'en_US',

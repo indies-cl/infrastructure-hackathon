@@ -16,11 +16,13 @@
     "@fontsource-variable/geist": "^5.3.0",
     "@fontsource/ia-writer-quattro": "^5.3.0",
     "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/react-form": "^1.33.5",
     "@web-kits/audio": "^0.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "tailwindcss": "^4.3.3",
-    "three": "^0.186.0"
+    "three": "^0.186.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",

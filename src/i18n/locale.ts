@@ -3,27 +3,23 @@ export type Locale = 'en' | 'es'
 export const DEFAULT_LOCALE: Locale = 'en'
 export const LOCALE_COOKIE = 'locale'
 
-export function pathLocale(pathname: string): Locale | null {
+export const HOME = '/'
+export const APPLY = '/apply'
+export const SPONSOR = '/sponsor'
+
+/** Old locale-prefixed URLs. Send people to the same page and keep the language they asked for. */
+const LEGACY: Record<string, { dest: string; locale: Locale }> = {
+  '/en': { dest: SPONSOR, locale: 'en' },
+  '/es': { dest: SPONSOR, locale: 'es' },
+  '/en/home': { dest: HOME, locale: 'en' },
+  '/es/home': { dest: HOME, locale: 'es' },
+  '/en/apply': { dest: APPLY, locale: 'en' },
+  '/es/apply': { dest: APPLY, locale: 'es' },
+}
+
+export function legacyPath(pathname: string): { dest: string; locale: Locale } | null {
   const path = pathname.replace(/\/+$/, '') || '/'
-  if (path === '/en') return 'en'
-  if (path === '/es') return 'es'
-  return null
-}
-
-export function localePath(locale: Locale): string {
-  return `/${locale}`
-}
-
-/** Parse the locale from a world-facing home route (`/en/home`, `/es/home`). */
-export function homePathLocale(pathname: string): Locale | null {
-  const path = pathname.replace(/\/+$/, '') || '/'
-  if (path === '/en/home') return 'en'
-  if (path === '/es/home') return 'es'
-  return null
-}
-
-export function homePath(locale: Locale): string {
-  return `/${locale}/home`
+  return LEGACY[path] ?? null
 }
 
 export function htmlLang(locale: Locale): string {
@@ -65,4 +61,12 @@ export function negotiateLocale(
   acceptLanguage: string | null | undefined,
 ): Locale {
   return cookieLocale(cookieHeader) ?? fromAcceptLanguage(acceptLanguage)
+}
+
+export function persistLocale(locale: Locale): void {
+  document.cookie = `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`
+}
+
+export function cookieHeader(locale: Locale): string {
+  return `${LOCALE_COOKIE}=${locale}; Path=/; Max-Age=31536000; SameSite=Lax`
 }

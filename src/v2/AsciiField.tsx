@@ -140,7 +140,7 @@ export function AsciiField({
   return (
     <div
       ref={stageRef}
-      className={`relative isolate overflow-hidden bg-[#181818] ${className ?? ''}`}
+      className={`relative isolate overflow-hidden bg-[var(--ascii-bg,#181818)] ${className ?? ''}`}
     >
       {still ? (
         <img

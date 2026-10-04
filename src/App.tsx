@@ -7,13 +7,8 @@ import { PicaroFigure } from './v2/PicaroFigure'
 import { type Metal } from './v2/metals'
 import { messages } from './i18n/messages'
 import { META } from './i18n/meta'
-import {
-  LOCALE_COOKIE,
-  htmlLang,
-  localePath,
-  otherLocale,
-  type Locale,
-} from './i18n/locale'
+import { htmlLang, otherLocale } from './i18n/locale'
+import { useLocale } from './i18n/use-locale'
 
 const MAIL = 'mailto:benjamin@velum-labs.com'
 const LINKEDIN = 'https://www.linkedin.com/in/benjamzc/'
@@ -65,7 +60,8 @@ function Section({
   )
 }
 
-export default function App({ locale }: { locale: Locale }) {
+export default function App() {
+  const [locale, setLocale] = useLocale()
   const t = messages[locale]
   const next = otherLocale(locale)
 
@@ -294,16 +290,13 @@ export default function App({ locale }: { locale: Locale }) {
         </Section>
 
         <p className="mt-20 border-t border-[#2a2a2a] pt-12 font-mono text-base leading-7 md:mt-28 md:pt-16">
-          <a
-            className={INVERT}
-            href={`${localePath(next)}${window.location.search}${window.location.hash}`}
-            hrefLang={htmlLang(next)}
-            onClick={() => {
-              document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=31536000; SameSite=Lax`
-            }}
+          <button
+            type="button"
+            className={`border-0 bg-transparent p-0 ${INVERT}`}
+            onClick={() => setLocale(next)}
           >
             {t.seeOther}
-          </a>
+          </button>
         </p>
       </main>
     </div>

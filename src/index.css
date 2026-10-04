@@ -15,6 +15,8 @@
 @theme {
   --color-background: #181818;
   --color-foreground: #d6d4d0;
+  --color-brand: #7c3aec;
+  --color-brand-hover: #8444ee;
   --color-primary: #6d4aff;
   --color-primary-foreground: #181818;
   --color-muted-foreground: #9a9890;
@@ -46,11 +48,27 @@
   animation: marquee var(--duration, 30s) linear infinite;
 }
 
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility animate-step-in {
+  animation: step-in 180ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
 @layer base {
   html {
     color-scheme: dark;
     background: #181818;
     scroll-behavior: smooth;
+    overscroll-behavior: none;
   }
 
   body {
@@ -83,7 +101,8 @@
       scroll-behavior: auto;
     }
 
-    .animate-marquee {
+    .animate-marquee,
+    .animate-step-in {
       animation: none;
     }
   }
