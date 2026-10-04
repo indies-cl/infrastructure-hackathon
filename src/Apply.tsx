@@ -463,8 +463,8 @@ export default function Apply() {
         </Progress.Root>
       </header>
 
-      <main className="grid gap-10 px-4 pt-10 pb-24 md:grid-cols-[minmax(0,1fr)_minmax(0,34rem)] md:gap-x-12 md:px-6 md:pt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,36rem)]">
-        <div ref={railRef} className="md:sticky md:self-start">
+      <main className="grid gap-10 px-4 pt-10 pb-24 md:grid-cols-[minmax(0,30rem)_minmax(0,34rem)] md:gap-x-12 md:px-6 md:pt-16 lg:grid-cols-[minmax(0,32rem)_minmax(0,36rem)]">
+        <div ref={railRef} className="md:col-start-1 md:row-start-1 md:sticky md:self-start">
           <p className="mb-2 text-base leading-7 text-[#5a5956] md:mb-3">{t.kicker}</p>
           <h1
             ref={headingRef}
@@ -478,7 +478,7 @@ export default function Apply() {
           </p>
         </div>
 
-        <div key={stepKey} className="animate-step-in min-w-0">
+        <div key={stepKey} className="animate-step-in min-w-0 md:col-start-2 md:row-start-1">
           {body}
         </div>
       </main>
