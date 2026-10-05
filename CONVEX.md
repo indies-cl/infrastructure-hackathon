@@ -8,7 +8,21 @@ Until `VITE_CONVEX_URL` is present at build time, submit waits and then succeeds
 
 ## Local
 
-Create `.env.local` in the repo root. It is gitignored.
+This repository is linked to the Convex project `vicente-matus/infra-futuro-velum-indies` and its personal development deployment `greedy-gecko-110`. The Convex CLI writes `.env.local` in the repo root when you select that deployment; the file is gitignored.
+
+```bash
+pnpm exec convex deployment select greedy-gecko-110
+pnpm exec convex dev --once
+```
+
+Run `pnpm exec convex dev` instead of `--once` to keep functions in sync while editing. The selected deployment uses:
+
+```bash
+CONVEX_DEPLOYMENT=dev:greedy-gecko-110
+VITE_CONVEX_URL=https://greedy-gecko-110.convex.cloud
+```
+
+For a different development deployment, create `.env.local` in the repo root with its name and URL:
 
 ```bash
 CONVEX_DEPLOYMENT=dev:your-deployment-name
