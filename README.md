@@ -7,7 +7,7 @@ pnpm install
 pnpm dev
 ```
 
-Pushes to `main` lint, build, and deploy to [infra.indies.cl](https://infra.indies.cl). Pull requests only run lint and build. Local emergency deploy is still `pnpm deploy`.
+Pushes to `main` lint, build, and deploy a Worker that redirects every request on [infra.indies.cl](https://infra.indies.cl) to [hackinfrafuturo.cl](https://hackinfrafuturo.cl/) (301). Pull requests only run lint and build. Local emergency deploy is still `pnpm deploy`.
 
 ## Deploy token (someone with account admin)
 
